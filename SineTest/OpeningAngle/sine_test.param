@@ -19,7 +19,8 @@ dKpcUnit             = 1 #
 dMsolUnit            = 1 #
 
 bRestart             = 0
-bSphSingleStep       = 1
+# Not necessary for this test.
+# bSphSingleStep       = 1
 
 #bDoAccel             = 0 # No acceleration
 bGasCooling		     = 0
