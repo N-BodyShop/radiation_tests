@@ -1,0 +1,77 @@
+# This is a parameter file for pkdgravRT
+#
+# 
+# This is the ionization front test for OTVET (I'm going from Petkova
+# & Springel, 2009).
+#
+bOverwrite           = 1
+bParaRead            = 0
+bParaWrite           = 0
+bPeriodic	         = 0
+iBinaryOutput	     = 1
+dxPeriod	         = 1                    #Size of periodicity in code units
+dyPeriod	         = 1
+dzPeriod	         = 1 #no z width, but 0 causes badness
+achInFile	         = sine_064^3.std
+achOutName	         = sine_064^3
+
+dKpcUnit             = 1 #
+dMsolUnit            = 1 #
+
+bRestart             = 0
+bSphSingleStep       = 1
+
+#bDoAccel             = 0 # No acceleration
+bGasCooling		     = 0
+
+#fix here - get timing correct
+dDelta               = 0.0001
+nSteps		         = 1
+iOutInterval         = 1
+
+#Cooling parameters
+
+dMassFracHelium      = 0.0                      
+bUV                  = 0                        
+
+#bDoAbsorptionOutput  = 1
+
+iCheckInterval       = 10
+#iOutInterval         = 1
+iLogInterval	     = 1
+bKDK		         = 1 
+dEta		         = 0.175
+dEtaCourant          = 0.4
+dEtauDot             = 0.25 # 25% change in energy/timestep allowed
+iMaxRung	         = 30
+bStandard 	         = 1
+bGeometric           = 0
+bDoGravity           = 0
+bDoSelfGravity       = 0
+bViscosityLimiter    = 1
+bCannonical          = 1
+nSmooth              = 32
+bDoGas			     = 0
+#bGasCooling		  = 1
+bGasIsothermal 		 = 1
+
+bDoRadiation		 = 1
+bWriteRadiation 	 = 1
+dLuminosity 		 = 1
+dThetaRad           = 1.0
+dTauMaxRef		     = 0.01
+nBucketRad		     = 10
+bOpticallyThin		 = 1
+#nBackground          = 256
+#dBackgroundFlux      = 0.25
+
+bDoIOrderOutput		 = 1
+dSoft                = 0.001
+
+dConstGamma          = 1.666667
+dMeanMolWeight       = 1.0
+
+bVStart              = 1                        #Verbose (if 1)
+bVStep               = 1                        #
+bVRungStat           = 1                        #
+bVDetails            = 1                        #
