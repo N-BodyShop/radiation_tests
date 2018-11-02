@@ -31,9 +31,9 @@ nSteps		         = 1
 iOutInterval         = 1
 
 #Cooling parameters
-
-dMassFracHelium      = 0.0                      
-bUV                  = 0                        
+# No cooling for these tests
+# dMassFracHelium      = 0.0                      
+# bUV                  = 0                        
 
 #bDoAbsorptionOutput  = 1
 
