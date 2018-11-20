@@ -1,0 +1,8 @@
+This is a small test to quickly look at radiation accuracy.
+
+The test is a cube of gas, with 8 particles at the corners of a unit
+cube centered on zero, and the rest of the gas Poisson distributed.
+Stars are place in a cube of .25 width in one corner.
+
+Gasoline needs to be compile with -DBALLS so that the luminosity of
+each star is 1.
