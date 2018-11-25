@@ -6,4 +6,4 @@ makeIC: makeIC.o
 	cc -o makeIC makeIC.o -lm
 
 clean:
-	rm -f makeIC makeIC.o
+	rm -rf makeIC makeIC.o simple.chk? simple.000* simple.log simple.timings

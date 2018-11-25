@@ -23,12 +23,18 @@ def plotflux(path):
     plt.xlabel('Distance')
     plt.ylabel('Flux times r^2')
 
-prog = 'gasoline.radiation.pvol'
+prog_gas = 'gasoline.radiation.pvol'
+output_gas = 'simple.00001'
+prog_changa = 'ChaNGa'
+output_changa = 'simple.000001'
 
 def thetacmp(prog, output) :
-    '''run a series of thetas and compare them'''
+    '''run a series of thetas and compare them;
+    arguments are the progam to run (e.g. gasoline) and the output basename
+    (e.g. simple.00001)'''
     thetas = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
     colors = ['k', 'b', 'g', 'r', 'c', 'm']
+    # Do comparision in reverse order so that 0.0 theta is plotted on top
     for i in range(5,-1, -1) :
         os.system(prog + ' -thetaRadiation ' + str(thetas[i]) + ' simple.param')
 
@@ -43,7 +49,24 @@ def thetacmp(prog, output) :
         gdx = snap.g['pos'] - star_cm
         gr = np.sqrt(sum((gdx*gdx).transpose()))
     
+        # Note normalization: assumes that all sources have luminousity "1",
+        # and therefore a flux of 1 per steradian/r^2
         plt.plot(gr, pf*gr*gr*4*3.14159, colors[i] + '.')
     plt.xlabel('Distance')
     plt.ylabel('Flux times r^2')
         
+def cha_vs_gas(theta) :
+    '''Point by point and summary comparison of ChaNGa and gasoline at
+    a given theta.'''
+
+    os.system(prog_gas + ' -thetaRadiation ' + str(theta) + ' simple.param')
+    snapg = pyn.load(output_gas)
+    pfg = snapg.g['radFlux']
+
+    os.system(prog_changa + ' -thetaRadiation ' + str(theta) + ' simple.param')
+    snapc = pyn.load(output_changa)
+    pfc = snapc.g['radFlux']
+    df = pfc - pfg
+    print('rms offset: ',  np.sqrt(sum(df*df)/len(df)))
+    print('mean offset: ',  sum(df)/len(df))
+    print('max offset: ',  np.sqrt(max(df*df)), ' at ', np.argmax(df*df))
