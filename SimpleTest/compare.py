@@ -55,18 +55,52 @@ def thetacmp(prog, output) :
     plt.xlabel('Distance')
     plt.ylabel('Flux times r^2')
         
+global df
+global pfc, pfg, snapc
+
 def cha_vs_gas(theta) :
     '''Point by point and summary comparison of ChaNGa and gasoline at
     a given theta.'''
 
-    os.system(prog_gas + ' -thetaRadiation ' + str(theta) + ' simple.param')
+    os.system(prog_gas + ' -thetaRadiation ' + str(theta) + ' simple.param > DIAG.gas')
     snapg = pyn.load(output_gas)
     pfg = snapg.g['radFlux']
 
-    os.system(prog_changa + ' -thetaRadiation ' + str(theta) + ' simple.param')
+    os.system(prog_changa + ' -thetaRadiation ' + str(theta) + ' simple.param > DIAG.cha')
     snapc = pyn.load(output_changa)
     pfc = snapc.g['radFlux']
     df = pfc - pfg
+    print('rms offset: ',  np.sqrt(sum(df*df)/len(df)))
+    print('mean offset: ',  sum(df)/len(df))
+    print('max offset: ',  np.sqrt(max(df*df)), ' at ', np.argmax(df*df))
+    
+    
+def read_direct() :
+    pfd = np.loadtxt('direct.radFlux', skiprows=1)
+    return pfd
+
+def cha_vs_direct(theta) :
+    '''Point by point and summary comparison of ChaNGa with direct summation
+    a given theta.'''
+
+    os.system(prog_changa + ' -thetaRadiation ' + str(theta) + ' simple.param > DIAG.cha')
+    snapc = pyn.load(output_changa)
+    pfc = snapc.g['radFlux']
+    pfd = read_direct()
+    df = (pfc - pfd)/pfd
+    print('rms offset: ',  np.sqrt(sum(df*df)/len(df)))
+    print('mean offset: ',  sum(df)/len(df))
+    print('max offset: ',  np.sqrt(max(df*df)), ' at ', np.argmax(df*df))
+
+def gas_vs_direct(theta) :
+    '''Point by point and summary comparison of gasoline with direct summation
+    a given theta.'''
+
+    os.system(prog_gas + ' -thetaRadiation ' + str(theta) + ' simple.param > DIAG.cha')
+    snapg = pyn.load(output_gas)
+    pfg = snapg.g['radFlux']
+    pfd = read_direct()
+    df = (pfg - pfd)/pfd
     print('rms offset: ',  np.sqrt(sum(df*df)/len(df)))
     print('mean offset: ',  sum(df)/len(df))
     print('max offset: ',  np.sqrt(max(df*df)), ' at ', np.argmax(df*df))
