@@ -10,3 +10,4 @@ direct_rad: direct_rad.o
 
 clean:
 	rm -rf makeIC makeIC.o simple.chk? simple.000* simple.log simple.timings
+	rm -rf direct_rad.o direct_rad
