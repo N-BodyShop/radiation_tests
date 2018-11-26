@@ -1,5 +1,8 @@
 /*
  * Program to do the direct radiation calculation.
+ * Usage: direct_rad dRadSoft < simple.tbin > direct.radFlux
+ * where "dRadSoft" is the softening of the radiation field around the
+ * stars.
  */
 #include <math.h>
 #include <stdio.h>
@@ -38,6 +41,9 @@ main(argc, argv)
   struct dump h;
   int i, j;
 
+  assert(argc == 2);
+  double dRadSoft = atof(argv[1]);
+
   xdrstdio_create(&xdrs, stdin, XDR_DECODE);
 
   xdr_header(&xdrs, &h);
@@ -59,6 +65,7 @@ main(argc, argv)
   }
   
   printf("%d\n", nSph);
+  double twoh2 = 4*dRadSoft*dRadSoft;
   for(i = 0; i < nSph; i++) {
       double dFlux = 0.0;
       for(j = 0; j < nStar; j++) {
@@ -68,7 +75,6 @@ main(argc, argv)
           double dz = pGas[i].pos[2] - pStar[j].pos[2];
           
           double r2 = dx*dx + dy*dy + dz*dz;
-          double twoh2 = 4*pStar[j].eps*pStar[i].eps;
           double b;
           SPLINE_RAD(r2, twoh2, &b);
           dFlux += b*M_1_PI*0.25;
