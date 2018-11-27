@@ -8,6 +8,9 @@ makeIC: makeIC.o
 direct_rad: direct_rad.o
 	cc -o direct_rad direct_rad.o -lm
 
+direct_thick: direct_thick.o
+	cc -o direct_thick direct_thick.o -lm
+
 clean:
 	rm -rf makeIC makeIC.o simple.chk? simple.000* simple.log simple.timings
 	rm -rf direct_rad.o direct_rad
